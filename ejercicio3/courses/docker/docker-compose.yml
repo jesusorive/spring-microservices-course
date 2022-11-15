@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+
+  courses_db:
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: courses
+      MYSQL_USER: user1
+      MYSQL_PASSWORD: pass1
+    ports:
+      - 3306:3306
+    volumes:
+      - ./data/courses:/var/lib/mysql

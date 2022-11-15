@@ -1,0 +1,11 @@
+spring.application.name=training-service
+server.port=8081
+eureka.client.service-url.default-zone=http://localhost:8761/eureka
+
+microservices.courses.url=http://courses-service
+
+# Required to make Swagger 3 work with newer versions of Spring Boot (>= 2.6)
+# see:
+# - https://stackoverflow.com/questions/40241843/failed-to-start-bean-documentationpluginsbootstrapper-in-spring-data-rest
+# - https://stackoverflow.com/questions/70036953/springboot-2-6-0-spring-fox-3-failed-to-start-bean-documentationpluginsboot
+spring.mvc.pathmatch.matching-strategy = ANT_PATH_MATCHER

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+		http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd
+		http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+		http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.9.xsd">
+
+    <changeSet id="1" author="orivej">
+        <comment>Inserting some courses for testing purposes</comment>
+        <insert tableName="course">
+            <column name="code" value="spr400"/>
+            <column name="name" value="Spring Boot"/>
+            <column name="duration" value="400"/>
+            <column name="price" value="299.99"/>
+        </insert>
+        <insert tableName="course">
+            <column name="code" value="typ25"/>
+            <column name="name" value="Typescript"/>
+            <column name="duration" value="25"/>
+            <column name="price" value="49.99"/>
+        </insert>
+        <insert tableName="course">
+            <column name="code" value="pyt350"/>
+            <column name="name" value="Python"/>
+            <column name="duration" value="350"/>
+            <column name="price" value="250.95"/>
+        </insert>
+        <insert tableName="course">
+            <column name="code" value="rea35"/>
+            <column name="name" value="React"/>
+            <column name="duration" value="35"/>
+            <column name="price" value="149.95"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>
+

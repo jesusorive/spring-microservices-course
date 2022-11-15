@@ -1,0 +1,98 @@
+version: '3.8'
+
+services:
+
+  eureka_server:
+    container_name: eureka-server
+    image: microservices/eureka:0.1
+    restart: always
+    ports:
+      - 8761:8761
+
+  configuration_server:
+    container_name: configuration-server
+    image: microservices/configuration:0.1
+    restart: always
+    ports:
+      - 8888:8888
+
+  gateway_server:
+    container_name: gateway-server
+    image: microservices/gateway:0.1
+    restart: always
+    ports:
+      - 9000:9000
+    environment:
+      - EUREKA_HOST=host.docker.internal
+      - EUREKA_PORT=8761
+
+  courses_db:
+    container_name: courses-db
+    image: mysql
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: courses
+      MYSQL_USER: user1
+      MYSQL_PASSWORD: pass1
+    volumes:
+      - ./courses/docker/data/courses:/var/lib/mysql
+
+  courses_service_1:
+    container_name: courses-service-1
+    image: microservices/courses:0.1
+    restart: always
+    ports:
+      - 8081:8080
+    environment:
+      - SERVICE_PORT=8080
+      - DATABASE_HOST=courses_db
+      - DATABASE_PORT=3306
+      - EUREKA_HOST=host.docker.internal
+      - EUREKA_PORT=8761
+      - CONFIG_HOST=host.docker.internal
+      - CONFIG_PORT=8888
+    depends_on:
+      - courses_db
+      - configuration_server
+      - eureka_server
+
+  courses_service_2:
+    container_name: courses-service-2
+    image: microservices/courses:0.1
+    restart: always
+    ports:
+      - 8082:8080
+    environment:
+      - SERVICE_PORT=8080
+      - DATABASE_HOST=courses_db
+      - DATABASE_PORT=3306
+      - EUREKA_HOST=host.docker.internal
+      - EUREKA_PORT=8761
+      - CONFIG_HOST=host.docker.internal
+      - CONFIG_PORT=8888
+    depends_on:
+      - courses_db
+      - configuration_server
+      - eureka_server
+
+  training_service:
+    container_name: training-service
+    image: microservices/training:0.1
+    restart: always
+    ports:
+      - 8090:8080
+    environment:
+      - SERVICE_PORT=8080
+      - DATABASE_HOST=courses_db
+      - DATABASE_PORT=3306
+      - EUREKA_HOST=host.docker.internal
+      - EUREKA_PORT=8761
+      - CONFIG_HOST=host.docker.internal
+      - CONFIG_PORT=8888
+    depends_on:
+      - courses_db
+      - configuration_server
+      - eureka_server
